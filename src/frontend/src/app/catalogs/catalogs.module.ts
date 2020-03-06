@@ -1,18 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { CatalogsComponent } from './catalogs.component';
 
+import { CatalogsComponent } from './catalogs.component';
+import { CoreModule } from '../core/core.module';
 
 const routes: Routes = [
   { path: '', component: CatalogsComponent }
 ];
 
 @NgModule({
-  declarations: [CatalogsComponent],
+  declarations: [
+    CatalogsComponent
+  ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CoreModule
   ]
 })
 export class CatalogsModule { }

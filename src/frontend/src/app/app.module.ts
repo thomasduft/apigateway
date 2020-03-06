@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 
 import { HomeComponent } from './home/home.component';
+import { CoreModule } from './core/core.module';
 
 const ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
@@ -23,6 +25,8 @@ const ROUTES: Routes = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
+    HttpClientModule,
+    CoreModule,
     SidebarModule,
     WorkspaceModule
   ],
