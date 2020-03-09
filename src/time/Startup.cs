@@ -17,13 +17,31 @@ namespace ApiGateway.TimeApi
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddCors(o =>
+      {
+        o.AddPolicy("AllowAllOrigins", builder =>
+        {
+          builder
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithExposedHeaders("X-Pagination");
+        });
+      });
+
       services.AddControllers();
+      services.AddSignalR();
+
+      services.AddSingleton<IHostedService, TimePusherService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
       {
+        app.UseCors("AllowAllOrigins");
+
         app.UseDeveloperExceptionPage();
       }
 
@@ -36,6 +54,7 @@ namespace ApiGateway.TimeApi
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllers();
+        endpoints.MapHub<TimeHub>("/timeHub");
       });
     }
   }

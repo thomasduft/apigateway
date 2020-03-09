@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiGateway.TimeApi.Controllers
+namespace ApiGateway.TimeApi
 {
   [ApiController]
   [Route("api/[controller]")]
