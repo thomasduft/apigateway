@@ -21,6 +21,17 @@
         }
       ],
       "UpstreamPathTemplate": "/order-api/{catchAll}"
+    },
+    {
+      "DownstreamPathTemplate": "/api/{catchAll}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5003
+        }
+      ],
+      "UpstreamPathTemplate": "/time-api/{catchAll}"
     }
   ],
   "GlobalConfiguration": {

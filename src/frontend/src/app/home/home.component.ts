@@ -1,4 +1,9 @@
+import { Observable } from 'rxjs';
+
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+
+import { HttpWrapperService } from '../core/services';
+import { Time } from './models';
 
 @Component({
   selector: 'tw-home',
@@ -7,10 +12,15 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
+  public time: Time
 
-  constructor() { }
+  constructor(
+    private http: HttpWrapperService
+  ) { }
 
   ngOnInit(): void {
+    this.http.get<Time>('time-api/time').subscribe((t: Time) => {
+      this.time = t;
+    });
   }
-
 }
