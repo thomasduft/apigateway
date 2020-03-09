@@ -20,7 +20,11 @@ namespace ApiGateway.GatewayApi
         optional: true,
         reloadOnChange: true
       )
-      .AddJsonFile("ocelot.json")
+      .AddJsonFile(
+        "ocelot.json",
+        optional: false,
+        reloadOnChange: true
+      )
       .AddEnvironmentVariables()
       .Build();
 
