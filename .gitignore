@@ -264,3 +264,5 @@ samples/WebApi/microwf.sqlite
 lcov.info
 test/coverage.json
 samples/StepperApi/stepper.sqlite
+src/sts/AspIdUsers.db
+src/sts/tempkey.rsa
