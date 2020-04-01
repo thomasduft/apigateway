@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +14,7 @@ namespace ApiGateway.GatewayApi
   {
     public Startup(IConfiguration configuration)
     {
-      Configuration = configuration;
+      this.Configuration = configuration;
     }
 
     public IConfiguration Configuration { get; }
@@ -31,6 +33,71 @@ namespace ApiGateway.GatewayApi
             .WithExposedHeaders("X-Pagination");
         });
       });
+
+      var authenticationProviderKey = "JwtBearerSchemeKey";
+      services
+        .AddAuthentication()
+        .AddJwtBearer(authenticationProviderKey, cfg =>
+        {
+          cfg.Authority = "https://localhost:5004";
+          cfg.Audience = "gateway";
+          cfg.RequireHttpsMetadata = false;
+        });
+
+      // services
+      //   .AddAuthentication(options =>
+      //   {
+      //     options.DefaultScheme = authenticationProviderKey;
+      //     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+      //   })
+      //   .AddJwtBearer(authenticationProviderKey, cfg =>
+      //   {
+      //     cfg.Authority = "https://localhost:5004";
+      //     cfg.Audience = "gateway";
+      //     cfg.RequireHttpsMetadata = false;
+      //   })
+      //   .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
+      //   {
+      //     options.SignInScheme = authenticationProviderKey;
+      //     options.Authority = "https://localhost:5004";
+      //     options.RequireHttpsMetadata = true;
+      //     options.ClientId = "gateway";
+      //     // options.ClientSecret = "gateway_client_secret";
+      //     options.ResponseType = "code";
+      //     options.UsePkce = false;
+      //     options.Scope.Add("profile");
+      //     options.Scope.Add("offline_access");
+      //     options.Scope.Add("catalog");
+      //     options.Scope.Add("orders.full_access");
+      //     options.Scope.Add("time");
+      //     options.SaveTokens = true;
+      //   });
+
+      // services
+      //   .AddAuthentication(options =>
+      //   {
+      //     options.DefaultScheme = "Cookies";
+      //     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+      //   })
+      //   .AddCookie()
+      //   .AddOpenIdConnect(options =>
+      //   {
+      //     options.SignInScheme = "Cookies";
+      //     options.Authority = "https://localhost:5004";
+      //     options.RequireHttpsMetadata = true;
+      //     options.ClientId = "gateway";
+      //     // options.ClientSecret = "codeflow_pkce_client_secret";
+      //     options.ResponseType = "code";
+      //     options.UsePkce = false;
+      //     options.Scope.Add("profile");
+      //     options.Scope.Add("offline_access");
+      //     options.Scope.Add("catalog");
+      //     options.Scope.Add("orders.full_access");
+      //     options.Scope.Add("time");
+      //     options.SaveTokens = true;
+      //   });
+
+      services.AddAuthorization();
 
       services.AddControllers();
 
@@ -53,6 +120,7 @@ namespace ApiGateway.GatewayApi
 
       app.UseRouting();
 
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseWebSockets();

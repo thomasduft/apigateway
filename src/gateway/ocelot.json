@@ -9,6 +9,10 @@
           "Port": 5001
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "JwtBearerSchemeKey",
+        "AllowedScopes": ["catalog"]
+      },
       "UpstreamPathTemplate": "/catalog-api/{catchAll}"
     },
     {

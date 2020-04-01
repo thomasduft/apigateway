@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,19 @@ namespace ApiGateway.CatalogApi
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services
+        .AddAuthentication(cfg =>
+        {
+          cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+          cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, cfg =>
+        {
+          cfg.Authority = "https://localhost:5004";
+          cfg.Audience = "catalog";
+          cfg.RequireHttpsMetadata = false;
+        });
+
       services.AddControllers();
     }
 
@@ -31,6 +45,7 @@ namespace ApiGateway.CatalogApi
 
       app.UseRouting();
 
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
