@@ -4,6 +4,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
+import { OAuthModule } from 'angular-oauth2-oidc';
+
 import { AppComponent } from './app.component';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { WorkspaceModule } from './workspace/workspace.module';
@@ -25,8 +27,17 @@ const ROUTES: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES),
     HttpClientModule,
+    RouterModule.forRoot(ROUTES),
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: [
+          'https://localhost:5000',
+          'http://localhost:4200'
+        ],
+        sendAccessToken: true
+      }
+    }),
     CoreModule,
     SidebarModule,
     WorkspaceModule
