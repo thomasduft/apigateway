@@ -1,4 +1,4 @@
-﻿@model LoginViewModel
+@model LoginViewModel
 
 <div class="login-page">
     <div class="page-header">
@@ -30,6 +30,9 @@
                                     <label asp-for="Password"></label>
                                     <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
                                 </div>
+                                <div>
+                                  Users: admin/alice/bob (Password: password)
+                                </div>
                                 @if (Model.AllowRememberLogin)
                                 {
                                     <div class="form-group login-remember">
@@ -39,11 +42,6 @@
                                         </label>
                                     </div>
                                 }
-
-                                <div>
-                                    <p>The default users are alice/bob, password: Pass123$</p>
-                                </div>
-
                                 <div class="form-group">
                                     <button class="btn btn-primary" name="button" value="login">Login</button>
                                     <button class="btn btn-default" name="button" value="cancel">Cancel</button>

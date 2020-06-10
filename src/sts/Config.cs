@@ -1,10 +1,9 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
+using IdentityServer4.Test;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace ApiGateway.STS
 {
@@ -118,5 +117,39 @@ namespace ApiGateway.STS
             }
         }
       };
+
+    public static List<TestUser> GetUsers()
+    {
+      return new List<TestUser>
+      {
+        new TestUser
+        {
+          SubjectId = "1",
+          Username = "admin",
+          Password = "password",
+          Claims = {
+            new Claim(JwtClaimTypes.Name, "admin")
+          }
+        },
+        new TestUser
+        {
+          SubjectId = "2",
+          Username = "alice",
+          Password = "password",
+          Claims = {
+            new Claim(JwtClaimTypes.Name, "alice")
+          }
+        },
+        new TestUser
+        {
+          SubjectId = "3",
+          Username = "bob",
+          Password = "password",
+          Claims = {
+            new Claim(JwtClaimTypes.Name, "bob")
+          }
+        }
+      };
+    }
   }
 }
