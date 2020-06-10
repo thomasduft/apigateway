@@ -3,7 +3,7 @@ import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 
 import { environment } from '../../environments/environment';
-import { HttpWrapperService } from '../core/services';
+import { HttpWrapperService, UserService } from '../core/services';
 import { Time } from './models';
 
 @Component({
@@ -18,15 +18,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   public time: Time;
 
   constructor(
-    private http: HttpWrapperService
+    private http: HttpWrapperService,
+    private user: UserService
   ) { }
 
   ngOnInit(): void {
-    this.http.get<Time>('time-api/time').subscribe((t: Time) => {
-      this.time = t;
-    });
+    if (this.user.isAuthenticated) {
+      this.http.get<Time>('time-api/time')
+        .subscribe((t: Time) => {
+          this.time = t;
+        });
 
-    this.init();
+      this.init();
+    }
   }
 
   ngOnDestroy(): void {

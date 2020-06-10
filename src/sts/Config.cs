@@ -73,20 +73,17 @@ namespace ApiGateway.STS
         {
           ClientId = "frontend",
           ClientName = "SPA Client",
-          ClientUri = "http://localhost:5000",
+          ClientUri = "https://localhost:5000",
           AllowedGrantTypes = GrantTypes.Code,
           RequirePkce = true,
           RequireClientSecret = false,
           RedirectUris =
           {
-            "http://localhost:5000/index.html",
-            "http://localhost:5000/callback.html",
-            "http://localhost:5000/silent.html",
-            "http://localhost:5000/popup.html",
+            "https://localhost:5000",
             "http://localhost:4200"
           },
-          PostLogoutRedirectUris = { "http://localhost:5000/index.html", "http://localhost:4200" },
-          AllowedCorsOrigins = { "http://localhost:4200" },
+          PostLogoutRedirectUris = { "https://localhost:5000/index.html", "http://localhost:4200" },
+          AllowedCorsOrigins = { "http://localhost:4200", "https://localhost:5000" },
           AllowedScopes = { "openid", "profile", "catalog", "orders.full_access", "time" }
         },
         new Client
