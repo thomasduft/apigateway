@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace ApiGateway.STS
 {
@@ -67,10 +68,11 @@ namespace ApiGateway.STS
       if (Environment.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-        app.UseDatabaseErrorPage();
       }
 
       app.UseStaticFiles();
+
+      app.UseSerilogRequestLogging();
 
       app.UseRouting();
 

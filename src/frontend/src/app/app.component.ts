@@ -34,13 +34,13 @@ export class AppComponent implements OnInit {
 
   private async configure() {
     this.oauthService.configure({
-      clientId: 'frontent',
+      clientId: 'spa',
       issuer: 'https://localhost:5004',
-      redirectUri: !isDevMode()
-        ? window.location.origin // 'https://localhost:5000' ||
-        : 'https://localhost:4200',
+      redirectUri: isDevMode()
+        ? 'http://localhost:4200'
+        : window.location.origin,
       responseType: 'code',
-      scope: 'profile offline_access catalog orders.full_access time',
+      scope: 'openid profile catalog orders.full_access time',
       loginUrl: 'https://localhost:5004/account/login',
       logoutUrl: 'https://localhost:5004/account/logout',
       requireHttps: false

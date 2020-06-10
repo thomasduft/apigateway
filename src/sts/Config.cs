@@ -82,9 +82,10 @@ namespace ApiGateway.STS
             "http://localhost:5000/index.html",
             "http://localhost:5000/callback.html",
             "http://localhost:5000/silent.html",
-            "http://localhost:5000/popup.html"
+            "http://localhost:5000/popup.html",
+            "http://localhost:4200"
           },
-          PostLogoutRedirectUris = { "http://localhost:5000/index.html" },
+          PostLogoutRedirectUris = { "http://localhost:5000/index.html", "http://localhost:4200" },
           AllowedCorsOrigins = { "http://localhost:4200" },
           AllowedScopes = { "openid", "profile", "catalog", "orders.full_access", "time" }
         },
