@@ -71,7 +71,7 @@ namespace ApiGateway.STS
         // SPA client using code flow + pkce
         new Client
         {
-          ClientId = "spa",
+          ClientId = "frontend",
           ClientName = "SPA Client",
           ClientUri = "http://localhost:5000",
           AllowedGrantTypes = GrantTypes.Code,

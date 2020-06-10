@@ -10,7 +10,7 @@ export class UserService {
   private claims: Array<string> = new Array<string>();
 
   public get isAuthenticated(): boolean {
-    return this.username !==  UserService.ANONYMOUS;
+    return this.username !== UserService.ANONYMOUS;
   }
 
   public get userName(): string {
@@ -35,13 +35,17 @@ export class UserService {
 
   public setProperties(accesToken: string = null): void {
     if (accesToken) {
-      const jwt = JSON.parse(window.atob(accesToken.split('.')[1]));
+      const payload = JSON.parse(window.atob(accesToken.split('.')[1]));
 
-      this.username = jwt.name;
+      this.username = payload.name;
 
-      this.claims = Array.isArray(jwt.role)
-        ? jwt.role
-        : [jwt.role];
+      this.claims = Array.isArray(payload.role)
+        ? payload.role
+        : [payload.role];
+
+      if (payload.tw && Array.isArray(payload.tw)) {
+        this.claims.push(...payload.tw);
+      }
 
       return;
     }

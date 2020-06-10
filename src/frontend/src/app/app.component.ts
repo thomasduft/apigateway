@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
 
   private async configure() {
     this.oauthService.configure({
-      clientId: 'spa',
+      clientId: 'frontend',
       issuer: 'https://localhost:5004',
       redirectUri: isDevMode()
         ? 'http://localhost:4200'
