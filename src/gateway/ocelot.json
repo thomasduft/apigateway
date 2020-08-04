@@ -29,7 +29,6 @@
         "AllowedScopes": []
       },
       "UpstreamPathTemplate": "/order-api/{catchAll}",
-      "UpstreamHttpMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/api/time",
@@ -40,8 +39,7 @@
           "Port": 5003
         }
       ],
-      "UpstreamPathTemplate": "/time-api/time",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/time-api/time"
     },
     {
       "DownstreamPathTemplate": "/{catchAll}",
