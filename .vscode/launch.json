@@ -5,7 +5,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (web)",
+      "name": "Gateway",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
@@ -23,6 +23,17 @@
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"
       }
+    },
+    {
+      "name": "STS",
+      "type": "coreclr",
+      "request": "launch",
+      "console": "externalTerminal",
+      "preLaunchTask": "build-sts",
+      "program": "${workspaceRoot}/src/sts/bin/Debug/netcoreapp3.1/ApiGateway.STS.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/src/sts",
+      "stopAtEntry": false
     },
     {
       "name": ".NET Core Attach",

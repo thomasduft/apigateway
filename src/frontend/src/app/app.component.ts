@@ -43,10 +43,13 @@ export class AppComponent implements OnInit {
       scope: 'openid profile backend-suite',
       loginUrl: 'https://localhost:5004/account/login',
       logoutUrl: 'https://localhost:5004/account/logout',
-      requireHttps: false
+      requireHttps: false,
+      showDebugInformation: true
     });
+
     this.oauthService.events.subscribe(async (e: OAuthEvent) => {
       // console.log(e);
+
       if (e.type === 'token_received' || e.type === 'token_refreshed') {
         this.user.setProperties(this.oauthService.getAccessToken());
       }
@@ -57,6 +60,7 @@ export class AppComponent implements OnInit {
         this.user.setProperties(this.oauthService.getAccessToken());
       }
     });
+
     this.oauthService.loadDiscoveryDocumentAndLogin({
       onTokenReceived: context => {
         this.user.setProperties(context.accessToken);

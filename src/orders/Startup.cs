@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ApiGateway.OrdersApi
 {
@@ -17,6 +19,19 @@ namespace ApiGateway.OrdersApi
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(opt =>
+        {
+          opt.Authority = "https://localhost:5004";
+          opt.Audience = "orders";
+          opt.RequireHttpsMetadata = false;
+          opt.TokenValidationParameters = new TokenValidationParameters()
+          {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+          };
+        });
+
       services.AddControllers();
     }
 
@@ -31,6 +46,7 @@ namespace ApiGateway.OrdersApi
 
       app.UseRouting();
 
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>

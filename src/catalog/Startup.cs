@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ApiGateway.CatalogApi
 {
@@ -19,17 +20,18 @@ namespace ApiGateway.CatalogApi
     public void ConfigureServices(IServiceCollection services)
     {
       services
-        .AddAuthentication(cfg =>
+      .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+      .AddJwtBearer(opt =>
+      {
+        opt.Authority = "https://localhost:5004";
+        opt.Audience = "backend-suite";
+        opt.RequireHttpsMetadata = false;
+        opt.TokenValidationParameters = new TokenValidationParameters()
         {
-          cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-          cfg.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, cfg =>
-        {
-          cfg.Authority = "https://localhost:5004";
-          cfg.Audience = "catalog";
-          cfg.RequireHttpsMetadata = false;
-        });
+          ValidateIssuer = true,
+          ValidateAudience = false,
+        };
+      });
 
       services.AddControllers();
     }

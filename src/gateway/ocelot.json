@@ -28,10 +28,11 @@
         "AuthenticationProviderKey": "JwtBearerSchemeKey",
         "AllowedScopes": []
       },
-      "UpstreamPathTemplate": "/order-api/{catchAll}"
+      "UpstreamPathTemplate": "/order-api/{catchAll}",
+      "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/api/{catchAll}",
+      "DownstreamPathTemplate": "/api/time",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -39,11 +40,8 @@
           "Port": 5003
         }
       ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "JwtBearerSchemeKey",
-        "AllowedScopes": []
-      },
-      "UpstreamPathTemplate": "/time-api/{catchAll}"
+      "UpstreamPathTemplate": "/time-api/time",
+      "UpstreamHttpMethod": [ "Get" ]
     },
     {
       "DownstreamPathTemplate": "/{catchAll}",
@@ -59,7 +57,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5000",
-    "RequestIdKey": "OcRequestId"
+    "BaseUrl": "https://localhost:5000"
   }
 }

@@ -6,7 +6,7 @@ import { CatalogsComponent } from './catalogs.component';
 import { CoreModule } from '../core/core.module';
 
 const routes: Routes = [
-  { path: '', component: CatalogsComponent }
+  { path: 'catalogs', component: CatalogsComponent }
 ];
 
 @NgModule({

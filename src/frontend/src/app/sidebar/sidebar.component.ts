@@ -1,4 +1,8 @@
 import { Component, OnInit, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { OAuthService } from 'angular-oauth2-oidc';
+
 import { UserService } from '../core';
 
 @Component({
@@ -17,10 +21,17 @@ export class SidebarComponent implements OnInit {
   }
 
   public constructor(
-    private user: UserService
+    private router: Router,
+    private user: UserService,
+    private oauthService: OAuthService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
+  public logout(): void {
+    this.oauthService.logOut();
+    this.user.reset();
+    this.router.navigate(['/']);
+  }
 }

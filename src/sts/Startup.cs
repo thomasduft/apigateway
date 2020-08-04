@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using IdentityServer4.Configuration;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +44,11 @@ namespace ApiGateway.STS
             options.Events.RaiseInformationEvents = true;
             options.Events.RaiseFailureEvents = true;
             options.Events.RaiseSuccessEvents = true;
+            options.Authentication = new AuthenticationOptions()
+            {
+              CookieLifetime = TimeSpan.FromHours(4), // ID server cookie timeout set to 10 hours
+              CookieSlidingExpiration = true
+            };
           })
           .AddInMemoryIdentityResources(Config.Ids)
           .AddInMemoryApiScopes(Config.ApiScopes)

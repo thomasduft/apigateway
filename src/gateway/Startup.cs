@@ -1,10 +1,13 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -35,71 +38,25 @@ namespace ApiGateway.GatewayApi
       });
 
       var authenticationProviderKey = "JwtBearerSchemeKey";
+
       services
-        .AddAuthentication()
-        .AddJwtBearer(authenticationProviderKey, cfg =>
+        .AddAuthentication(opt =>
         {
-          cfg.Authority = "https://localhost:5004";
-          cfg.Audience = "gateway";
-          cfg.RequireHttpsMetadata = false;
+          opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+          opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(authenticationProviderKey, opt =>
+        {
+          opt.Authority = "https://localhost:5004";
+          opt.Audience = "gateway";
+          opt.RequireHttpsMetadata = false;
+          opt.TokenValidationParameters = new TokenValidationParameters()
+          {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+          };
         });
-
-      // services
-      //   .AddAuthentication(options =>
-      //   {
-      //     options.DefaultScheme = authenticationProviderKey;
-      //     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-      //   })
-      //   .AddJwtBearer(authenticationProviderKey, cfg =>
-      //   {
-      //     cfg.Authority = "https://localhost:5004";
-      //     cfg.Audience = "gateway";
-      //     cfg.RequireHttpsMetadata = false;
-      //   })
-      //   .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
-      //   {
-      //     options.SignInScheme = authenticationProviderKey;
-      //     options.Authority = "https://localhost:5004";
-      //     options.RequireHttpsMetadata = true;
-      //     options.ClientId = "gateway";
-      //     // options.ClientSecret = "gateway_client_secret";
-      //     options.ResponseType = "code";
-      //     options.UsePkce = false;
-      //     options.Scope.Add("profile");
-      //     options.Scope.Add("offline_access");
-      //     options.Scope.Add("catalog");
-      //     options.Scope.Add("orders.full_access");
-      //     options.Scope.Add("time");
-      //     options.SaveTokens = true;
-      //   });
-
-      // services
-      //   .AddAuthentication(options =>
-      //   {
-      //     options.DefaultScheme = "Cookies";
-      //     options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-      //   })
-      //   .AddCookie()
-      //   .AddOpenIdConnect(options =>
-      //   {
-      //     options.SignInScheme = "Cookies";
-      //     options.Authority = "https://localhost:5004";
-      //     options.RequireHttpsMetadata = true;
-      //     options.ClientId = "gateway";
-      //     // options.ClientSecret = "codeflow_pkce_client_secret";
-      //     options.ResponseType = "code";
-      //     options.UsePkce = false;
-      //     options.Scope.Add("profile");
-      //     options.Scope.Add("offline_access");
-      //     options.Scope.Add("catalog");
-      //     options.Scope.Add("orders.full_access");
-      //     options.Scope.Add("time");
-      //     options.SaveTokens = true;
-      //   });
-
-      services.AddAuthorization();
-
-      services.AddControllers();
 
       services.AddOcelot(this.Configuration);
     }
@@ -115,20 +72,37 @@ namespace ApiGateway.GatewayApi
 
       app.UseHttpsRedirection();
 
+      ConsiderSpaRoutes(app);
+
       app.UseDefaultFiles();
       app.UseStaticFiles();
-
-      app.UseRouting();
 
       app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseWebSockets();
       app.UseOcelot().Wait();
+    }
 
-      app.UseEndpoints(endpoints =>
+    private static void ConsiderSpaRoutes(IApplicationBuilder app)
+    {
+      var angularRoutes = new[]
       {
-        endpoints.MapControllers();
+        "/home",
+        "/catalogs",
+        "/orders"
+      };
+
+      app.Use(async (context, next) =>
+      {
+        if (context.Request.Path.HasValue
+          && null != angularRoutes.FirstOrDefault(
+            (ar) => context.Request.Path.Value.StartsWith(ar, StringComparison.OrdinalIgnoreCase)))
+        {
+          context.Request.Path = new PathString("/");
+        }
+
+        await next();
       });
     }
   }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,10 +31,19 @@ namespace ApiGateway.TimeApi
         });
       });
 
-      services.AddControllers();
       services.AddSignalR();
 
       services.AddSingleton<IHostedService, TimePusherService>();
+
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(opt =>
+        {
+          opt.Authority = "https://localhost:5004";
+          opt.Audience = "time";
+          opt.RequireHttpsMetadata = false;
+        });
+
+      services.AddControllers();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,6 +59,7 @@ namespace ApiGateway.TimeApi
 
       app.UseRouting();
 
+      app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>

@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,12 +10,15 @@ import { SidebarModule } from './sidebar/sidebar.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 
 import { HomeComponent } from './home/home.component';
+
+import { httpInterceptorProviders } from './core/services/interceptors';
 import { CoreModule } from './core/core.module';
+
+import { CatalogsModule } from './catalogs/catalogs.module';
+import { OrdersModule } from './orders/orders.module';
 
 const ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'catalogs', loadChildren: () => import('./catalogs/catalogs.module').then(m => m.CatalogsModule) },
-  { path: 'orders', loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: HomeComponent }
 ];
@@ -29,21 +31,15 @@ const ROUTES: Routes = [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES),
-    OAuthModule.forRoot({
-      resourceServer: {
-        allowedUrls: [
-          'https://localhost:5000',
-          'http://localhost:4200'
-        ],
-        sendAccessToken: true
-      }
-    }),
+    OAuthModule.forRoot(),
     CoreModule,
+    CatalogsModule,
+    OrdersModule,
     SidebarModule,
     WorkspaceModule
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    httpInterceptorProviders,
   ],
   bootstrap: [AppComponent]
 })
