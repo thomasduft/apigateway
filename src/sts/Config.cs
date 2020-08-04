@@ -16,7 +16,17 @@ namespace ApiGateway.STS
         new IdentityResources.Profile()
       };
 
-    public static IEnumerable<ApiResource> Apis =>
+    public static IEnumerable<ApiScope> ApiScopes =>
+       new ApiScope[]
+       {
+        new ApiScope
+        {
+          Name = "backend-suite",
+          DisplayName = "backend suite"
+        }
+       };
+
+    public static IEnumerable<ApiResource> ApiResources =>
       new ApiResource[]
       {
         new ApiResource
@@ -58,6 +68,7 @@ namespace ApiGateway.STS
           AllowedGrantTypes = GrantTypes.Code,
           RequirePkce = true,
           RequireClientSecret = false,
+          AllowAccessTokensViaBrowser = true,
           RedirectUris =
           {
             "https://localhost:5000",
@@ -65,7 +76,7 @@ namespace ApiGateway.STS
           },
           PostLogoutRedirectUris = { "https://localhost:5000/index.html", "http://localhost:4200" },
           AllowedCorsOrigins = { "http://localhost:4200", "https://localhost:5000" },
-          AllowedScopes = { "openid", "profile", "catalog", "orders.full_access", "time" }
+          AllowedScopes = { "openid", "profile", "backend-suite" }
         },
         new Client
         {
@@ -89,11 +100,8 @@ namespace ApiGateway.STS
           {
             IdentityServerConstants.StandardScopes.OpenId,
             IdentityServerConstants.StandardScopes.Profile,
-            IdentityServerConstants.StandardScopes.OfflineAccess,
-            "catalog",
-            "orders.full_access",
-            "time"
-            }
+            "backend-suite"
+          }
         }
       };
 

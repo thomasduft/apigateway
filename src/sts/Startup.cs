@@ -44,8 +44,8 @@ namespace ApiGateway.STS
             options.Events.RaiseSuccessEvents = true;
           })
           .AddInMemoryIdentityResources(Config.Ids)
-          // .AddInMemoryApiScopes(...)
-          .AddInMemoryApiResources(Config.Apis)
+          .AddInMemoryApiScopes(Config.ApiScopes)
+          // .AddInMemoryApiResources(Config.Apis)
           .AddInMemoryClients(Config.Clients)
           .AddTestUsers(Config.GetUsers())
           .AddProfileService<ProfileService>();

@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
         ? 'http://localhost:4200'
         : window.location.origin,
       responseType: 'code',
-      scope: 'openid profile catalog orders.full_access time',
+      scope: 'openid profile backend-suite',
       loginUrl: 'https://localhost:5004/account/login',
       logoutUrl: 'https://localhost:5004/account/logout',
       requireHttps: false
