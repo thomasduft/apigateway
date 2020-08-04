@@ -23,44 +23,25 @@ namespace ApiGateway.STS
         {
           Name = "catalog",
           DisplayName = "catalog api",
-          Scopes =
-          {
-            new Scope()
-            {
-              Name = "catalog",
-              DisplayName = "catalog api"
-            }
+          Scopes = {
+           "catalog"
           }
         },
         new ApiResource
         {
           Name = "orders",
           DisplayName = "orders api",
-          Scopes =
-          {
-            new Scope()
-            {
-              Name = "orders.full_access",
-              DisplayName = "full access to orders api"
-            },
-            new Scope()
-            {
-              Name = "orders.read_only",
-              DisplayName = "read only access to orders api"
-            }
+          Scopes = {
+            "orders.full_access",
+            "orders.read_only"
           }
         },
         new ApiResource
         {
           Name = "time",
           DisplayName = "time api",
-          Scopes =
-          {
-            new Scope()
-            {
-              Name = "time",
-              DisplayName = "time api"
-            }
+          Scopes = {
+            "time"
           }
         }
       };
