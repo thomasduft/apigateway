@@ -52,7 +52,7 @@ namespace ApiGateway.STS
           })
           .AddInMemoryIdentityResources(Config.Ids)
           .AddInMemoryApiScopes(Config.ApiScopes)
-          // .AddInMemoryApiResources(Config.Apis)
+          // .AddInMemoryApiResources(Config.ApiResources)
           .AddInMemoryClients(Config.Clients)
           .AddTestUsers(Config.GetUsers())
           .AddProfileService<ProfileService>();

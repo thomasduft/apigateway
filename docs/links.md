@@ -11,6 +11,9 @@
 - [see MS Docs](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/multi-container-microservice-net-applications/implement-api-gateways-with-ocelot#authentication-and-authorization-in-ocelot-api-gateways)
 - [or here](https://docs.microsoft.com/en-us/dotnet/architecture/microservices/secure-net-microservices-web-applications/#authenticate-with-an-openid-connect-or-oauth-20-identity-provider)
 
+- Audience Claim
+  - https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=audience%20claim#api-resources
+
 ## Angular
  - Router.resetConfig(routes) approach???
  - [Angular native way](https://netbasal.com/the-need-for-speed-lazy-load-non-routable-modules-in-angular-30c8f1c33093)
