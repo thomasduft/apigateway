@@ -25,7 +25,6 @@ namespace ApiGateway.TimeApi
     {
       while (!stoppingToken.IsCancellationRequested)
       {
-
         var time = new Time { Now = DateTime.Now };
 
         this.logger.LogInformation($"Sending time {time.Now}");

@@ -48,13 +48,7 @@ QC-xxx identifies a quality characteristic or a non-functional requirement.
 | ---- | ---- |
 |      |      |
 |      |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
-|      |      |
+
 
 ## Overall description
 
