@@ -1,5 +1,5 @@
 {
-  "ReRoutes": [
+  "Routes": [
     {
       "DownstreamPathTemplate": "/api/{catchAll}",
       "DownstreamScheme": "https",
@@ -28,7 +28,7 @@
         "AuthenticationProviderKey": "JwtBearerSchemeKey",
         "AllowedScopes": []
       },
-      "UpstreamPathTemplate": "/order-api/{catchAll}",
+      "UpstreamPathTemplate": "/order-api/{catchAll}"
     },
     {
       "DownstreamPathTemplate": "/api/time",
