@@ -1,3 +1,4 @@
+import { HomeModule } from './home/home.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -33,13 +34,14 @@ const ROUTES: Routes = [
     RouterModule.forRoot(ROUTES),
     OAuthModule.forRoot(),
     CoreModule,
+    HomeModule,
     CatalogsModule,
     OrdersModule,
     SidebarModule,
     WorkspaceModule
   ],
   providers: [
-    httpInterceptorProviders,
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })
