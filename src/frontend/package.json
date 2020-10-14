@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.js --disableHostCheck=true",
+    "start": "ng serve --proxy-config proxy.conf.js",
     "build": "ng build",
     "build-frontend": "ng build --prod --output-path=../gateway/wwwroot",
     "test": "ng test",

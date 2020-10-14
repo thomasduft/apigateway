@@ -74,32 +74,17 @@ namespace ApiGateway.STS
             "https://localhost:5000",
             "http://localhost:4200"
           },
-          PostLogoutRedirectUris = { "https://localhost:5000/index.html", "http://localhost:4200" },
-          AllowedCorsOrigins = { "http://localhost:4200", "https://localhost:5000" },
-          AllowedScopes = { "openid", "profile", "backend-suite" }
-        },
-        new Client
-        {
-          ClientName = "gateway",
-          ClientId = "gateway",
-          ClientSecrets = {new Secret("gateway_client_secret".Sha256()) },
-          AllowedGrantTypes = GrantTypes.Code,
-          RequirePkce = false,
-          RequireClientSecret = false,
-          AllowOfflineAccess = true,
-          AlwaysSendClientClaims = true,
-          UpdateAccessTokenClaimsOnRefresh = true,
-          AlwaysIncludeUserClaimsInIdToken = true,
-          RedirectUris = {
-            "https://localhost:5000/signin-oidc"
-          },
           PostLogoutRedirectUris = {
-            "https://localhost:5000/signout-callback-oidc"
+            "https://localhost:5000",
+            "http://localhost:4200"
           },
-          AllowedScopes = new List<string>
-          {
-            IdentityServerConstants.StandardScopes.OpenId,
-            IdentityServerConstants.StandardScopes.Profile,
+          AllowedCorsOrigins = {
+            "https://localhost:5000",
+            "http://localhost:4200"
+          },
+          AllowedScopes = {
+            "openid",
+            "profile",
             "backend-suite"
           }
         }
