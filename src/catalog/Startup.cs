@@ -20,18 +20,18 @@ namespace ApiGateway.CatalogApi
     public void ConfigureServices(IServiceCollection services)
     {
       services
-      .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-      .AddJwtBearer(opt =>
-      {
-        opt.Authority = "https://localhost:5004";
-        opt.Audience = "backend-suite";
-        opt.RequireHttpsMetadata = false;
-        opt.TokenValidationParameters = new TokenValidationParameters()
+        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(opt =>
         {
-          ValidateIssuer = true,
-          ValidateAudience = false,
-        };
-      });
+          opt.Authority = "https://localhost:5004";
+          opt.Audience = "backend-suite";
+          opt.RequireHttpsMetadata = false;
+          opt.TokenValidationParameters = new TokenValidationParameters()
+          {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+          };
+        });
 
       services.AddControllers();
     }

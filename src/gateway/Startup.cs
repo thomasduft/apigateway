@@ -68,8 +68,6 @@ namespace ApiGateway.GatewayApi
       {
         app.UseCors("AllowAllOrigins");
 
-        IdentityModelEventSource.ShowPII = true;
-
         app.UseDeveloperExceptionPage();
       }
 

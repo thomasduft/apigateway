@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve --proxy-config proxy.conf.js",
     "build": "ng build",
-    "publish": "ng build --prod --output-path=../gateway/wwwroot",
+    "publish-gateway": "ng build --prod --output-path=../gateway/wwwroot",
+    "publish-yarp": "ng build --prod --output-path=../yarp/wwwroot",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
