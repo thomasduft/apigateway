@@ -37,7 +37,7 @@ export class UserService {
     if (accesToken) {
       const payload = JSON.parse(window.atob(accesToken.split('.')[1]));
 
-      this.username = payload.name;
+      this.username = payload.name || payload.given_name;
 
       this.claims = Array.isArray(payload.role)
         ? payload.role
