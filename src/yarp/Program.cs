@@ -14,6 +14,7 @@ namespace ApiGateway.Proxy
       Host.CreateDefaultBuilder(args)
         .ConfigureWebHostDefaults(webBuilder =>
         {
+          webBuilder.UseUrls("https://localhost:5010");
           webBuilder.UseStartup<Startup>();
         });
   }

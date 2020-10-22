@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.TimeApi", "src\t
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.STS", "src\sts\ApiGateway.STS.csproj", "{0E1E8ACA-77A9-4624-B7AE-DB12FD856FF5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Proxy", "src\yarp\ApiGateway.Proxy.csproj", "{DC3BDE92-7FB5-4D11-BA65-1D26BE6F2380}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGateway.Yarp", "src\yarp\ApiGateway.Yarp.csproj", "{DC3BDE92-7FB5-4D11-BA65-1D26BE6F2380}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -87,6 +87,35 @@ namespace ApiGateway.STS
             "profile",
             "backend-suite"
           }
+        },
+        new Client
+        {
+          ClientId = "bff",
+          ClientName = "BFF Client",
+          AllowedGrantTypes = GrantTypes.Code,
+          RequirePkce = true,
+          RequireClientSecret = false,
+          AllowOfflineAccess = true,
+          RedirectUris = {
+            "https://localhost:5010/signin-oidc",
+            "http://localhost:4200"
+          },
+          PostLogoutRedirectUris = {
+            "https://localhost:5010/signout-callback-oidc",
+            "http://localhost:4200"
+          },
+          AllowedCorsOrigins = new List<string>
+          {
+            "https://localhost:5010",
+            "https://localhost:4200"
+          },
+          AllowedScopes = new List<string>
+          {
+            "openid",
+            "profile",
+            "backend-suite",
+            "offline_access"
+          }
         }
       };
 

@@ -1,0 +1,9 @@
+<h1>Orders</h1>
+<ul>
+  <li *ngFor="let item of orders$ | async">
+    <span>{{ item.id }}</span>
+    <span>&nbsp;{{ item.article }}</span>
+    <span>&nbsp;{{ item.quantity }}</span>
+    <span>&nbsp;{{ item.price }}</span>
+  </li>
+</ul>

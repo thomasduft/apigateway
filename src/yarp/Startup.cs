@@ -1,6 +1,7 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,30 +15,70 @@ namespace ApiGateway.Proxy
   public class Startup
   {
     public IConfiguration Configuration { get; }
-    public object JwtBearerDefaults { get; private set; }
 
     public Startup(IConfiguration configuration)
     {
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
       Configuration = configuration;
     }
 
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddCors(o =>
+      {
+        o.AddPolicy("AllowAllOrigins", builder =>
+        {
+          builder
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithExposedHeaders("X-Pagination");
+        });
+      });
+
       services.AddReverseProxy()
         .LoadFromConfig(Configuration.GetSection("ReverseProxy"));
 
-      services.AddAuthentication()
-        .AddJwtBearer(opt =>
+      services.AddAccessTokenManagement();
+      services.AddControllers();
+      services.AddDistributedMemoryCache();
+
+      // see: https://github.com/leastprivilege/AspNetCoreSecuritySamples/blob/aspnetcore21/BFF/src/Host/Startup.cs
+      services.AddAuthentication(options =>
+      {
+        options.DefaultScheme = "cookies";
+        options.DefaultChallengeScheme = "oidc";
+      })
+      .AddCookie("cookies", options =>
+      {
+        options.Cookie.Name = "bff";
+        options.Cookie.SameSite = SameSiteMode.Strict;
+      })
+      .AddOpenIdConnect("oidc", options =>
+      {
+        // options.SignInScheme = "cookies";
+        options.Authority = "https://localhost:5004";
+        options.ClientId = "bff";
+        // options.ClientSecret = "secret";
+
+        options.ResponseType = "code";
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.SaveTokens = true;
+
+        options.Scope.Clear();
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+        options.Scope.Add("backend-suite");
+        options.Scope.Add("offline_access");
+
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-          opt.Authority = "https://localhost:5004";
-          opt.Audience = "backend-suite";
-          opt.RequireHttpsMetadata = false;
-          opt.TokenValidationParameters = new TokenValidationParameters()
-          {
-            ValidateIssuer = true,
-            ValidateAudience = false,
-          };
-        });
+          NameClaimType = "name",
+          RoleClaimType = "role"
+        };
+      });
 
       services.AddAuthorization(options =>
         {
@@ -53,6 +94,8 @@ namespace ApiGateway.Proxy
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+      app.UseCors("AllowAllOrigins");
+
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
@@ -60,21 +103,58 @@ namespace ApiGateway.Proxy
 
       app.UseHttpsRedirection();
 
-      ConsiderSpaRoutes(app);
+      app.UseAuthentication();
+      // Force user to be authenticated
+      app.Use(async (context, next) =>
+      {
+        if (!context.User.Identity.IsAuthenticated)
+        {
+          await context.ChallengeAsync();
+
+          return;
+        }
+
+        await next();
+      });
 
       app.UseDefaultFiles();
       app.UseStaticFiles();
+
+      // ConsiderSpaRoutes(app);
+      app.Use(async (context, next) =>
+      {
+        await next();
+
+        if (context.Response.StatusCode == 404 && !context.Request.Path.Value.Contains("/api"))
+        {
+          context.Request.Path = new PathString("/");
+
+          await next();
+        }
+      });
 
       app.UseRouting();
 
       app.UseAuthentication();
       app.UseAuthorization();
 
-      app.UseWebSockets();
-
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapReverseProxy();
+        endpoints.MapReverseProxy(proxyPipeline =>
+        {
+          proxyPipeline.Use((context, next) =>
+          {
+            var accessToken = context.GetUserAccessTokenAsync().GetAwaiter().GetResult();
+            context.Request.Headers.Add("Authorization", $"Bearer {accessToken}");
+
+            return next();
+          });
+
+          proxyPipeline.UseAffinitizedDestinationLookup();
+          proxyPipeline.UseProxyLoadBalancing();
+          proxyPipeline.UseRequestAffinitizer();
+        });
+        endpoints.MapControllers().RequireAuthorization();
       });
     }
 

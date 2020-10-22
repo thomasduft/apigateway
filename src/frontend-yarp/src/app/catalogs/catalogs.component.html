@@ -1,0 +1,7 @@
+<h1>Catalogs</h1>
+<ul>
+  <li *ngFor="let item of catalogs$ | async">
+    <span>{{ item.id }}</span>
+    <span>&nbsp;{{ item.name }}</span>
+  </li>
+</ul>

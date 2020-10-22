@@ -1,0 +1,23 @@
+<div class="sidebar__header">
+  <div>YARP App</div>
+</div>
+<div class="sidebar__content">
+  <ul>
+    <li routerLinkActive="active" class="menu__item">
+      <a routerLink="/home">{{ userName }}</a>
+    </li>
+    <li routerLinkActive="active" class="menu__item">
+      <a routerLink="/catalogs">Catalog</a>
+    </li>
+    <li routerLinkActive="active" class="menu__item">
+      <a routerLink="/orders">Orders</a>
+    </li>
+  </ul>
+</div>
+<div class="sidebar__footer">
+  <ul>
+    <li class="menu__item" (click)="logout()">
+      Logout
+    </li>
+  </ul>
+</div>
