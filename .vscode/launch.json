@@ -36,10 +36,37 @@
       "stopAtEntry": false
     },
     {
-      "name": ".NET Core Attach",
+      "name": "Time",
       "type": "coreclr",
-      "request": "attach",
-      "processId": "${command:pickProcess}"
+      "request": "launch",
+      "console": "externalTerminal",
+      "preLaunchTask": "build-time",
+      "program": "${workspaceRoot}/src/time/bin/Debug/netcoreapp3.1/ApiGateway.TimeApi.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/src/time",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Catalog",
+      "type": "coreclr",
+      "request": "launch",
+      "console": "externalTerminal",
+      "preLaunchTask": "build-catalog",
+      "program": "${workspaceRoot}/src/catalog/bin/Debug/netcoreapp3.1/ApiGateway.CatalogApi.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/src/catalog",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Orders",
+      "type": "coreclr",
+      "request": "launch",
+      "console": "externalTerminal",
+      "preLaunchTask": "build-orders",
+      "program": "${workspaceRoot}/src/orders/bin/Debug/netcoreapp3.1/ApiGateway.OrdersApi.dll",
+      "args": [],
+      "cwd": "${workspaceRoot}/src/orders",
+      "stopAtEntry": false
     }
   ]
 }

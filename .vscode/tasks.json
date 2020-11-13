@@ -24,6 +24,36 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "build-time",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceRoot}/src/time/ApiGateway.TimeApi.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-catalog",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceRoot}/src/catalog/ApiGateway.CatalogApi.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-orders",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceRoot}/src/orders/ApiGateway.OrdersApi.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "publish",
       "command": "dotnet",
       "type": "process",
