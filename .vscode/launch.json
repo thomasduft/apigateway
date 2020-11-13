@@ -5,13 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Gateway",
+      "name": "Yarp",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/gateway/bin/Debug/netcoreapp3.1/ApiGateway.GatewayApi.dll",
+      "preLaunchTask": "build-yarp",
+      "program": "${workspaceFolder}/src/yarp/bin/Debug/netcoreapp3.1/ApiGateway.Proxy.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src/gateway",
+      "cwd": "${workspaceFolder}/src/yarp",
       "stopAtEntry": false,
       "serverReadyAction": {
         "action": "openExternally",
