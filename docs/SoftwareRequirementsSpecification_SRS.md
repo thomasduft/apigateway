@@ -44,10 +44,10 @@ QC-xxx identifies a quality characteristic or a non-functional requirement.
 
 ## Glossary
 
-|      |      |
+| Name | Description |
 | ---- | ---- |
-|      |      |
-|      |      |
+| tbd | tbd |
+
 
 
 ## Overall description
