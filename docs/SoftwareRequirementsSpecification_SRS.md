@@ -8,7 +8,7 @@
 
 **Table of Contents**
 
-[[_TOC_]]
+[_TOC_]
 
 ## Introduction
 
@@ -53,9 +53,10 @@ QC-xxx identifies a quality characteristic or a non-functional requirement.
 ## Overall description
 
 This repository consists of the following applications:
+
 - Frontend: contains the applications ui
-- Gateway: provides as the applications api gateway and hosts the frontend.
-- Time: provides as the applications time services and uses websockets to push the current time to the frontend
+- Gateway: provides the applications api gateway and hosts the frontend.
+- Time: provides the applications time services and uses websockets to push the current time to the frontend
 - Catalog: provides a simple catalog api that requires authentication
 - Orders: provides a simple orders api that requires authentication
 
