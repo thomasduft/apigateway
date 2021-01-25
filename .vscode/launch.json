@@ -9,7 +9,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build-yarp",
-      "program": "${workspaceFolder}/src/yarp/bin/Debug/netcoreapp3.1/ApiGateway.Proxy.dll",
+      "program": "${workspaceFolder}/src/yarp/bin/Debug/net5.0/ApiGateway.Proxy.dll",
       "args": [],
       "cwd": "${workspaceFolder}/src/yarp",
       "stopAtEntry": false,
@@ -30,7 +30,7 @@
       "request": "launch",
       "console": "externalTerminal",
       "preLaunchTask": "build-sts",
-      "program": "${workspaceRoot}/src/sts/bin/Debug/netcoreapp3.1/ApiGateway.STS.dll",
+      "program": "${workspaceRoot}/src/sts/bin/Debug/net5.0/ApiGateway.STS.dll",
       "args": [],
       "cwd": "${workspaceRoot}/src/sts",
       "stopAtEntry": false
@@ -41,7 +41,7 @@
       "request": "launch",
       "console": "externalTerminal",
       "preLaunchTask": "build-time",
-      "program": "${workspaceRoot}/src/time/bin/Debug/netcoreapp3.1/ApiGateway.TimeApi.dll",
+      "program": "${workspaceRoot}/src/time/bin/Debug/net5.0/ApiGateway.TimeApi.dll",
       "args": [],
       "cwd": "${workspaceRoot}/src/time",
       "stopAtEntry": false
@@ -52,7 +52,7 @@
       "request": "launch",
       "console": "externalTerminal",
       "preLaunchTask": "build-catalog",
-      "program": "${workspaceRoot}/src/catalog/bin/Debug/netcoreapp3.1/ApiGateway.CatalogApi.dll",
+      "program": "${workspaceRoot}/src/catalog/bin/Debug/net5.0/ApiGateway.CatalogApi.dll",
       "args": [],
       "cwd": "${workspaceRoot}/src/catalog",
       "stopAtEntry": false
@@ -63,7 +63,7 @@
       "request": "launch",
       "console": "externalTerminal",
       "preLaunchTask": "build-orders",
-      "program": "${workspaceRoot}/src/orders/bin/Debug/netcoreapp3.1/ApiGateway.OrdersApi.dll",
+      "program": "${workspaceRoot}/src/orders/bin/Debug/net5.0/ApiGateway.OrdersApi.dll",
       "args": [],
       "cwd": "${workspaceRoot}/src/orders",
       "stopAtEntry": false
